@@ -1,0 +1,123 @@
+Code locations:
+==================================================
+## Align eng-hindi files 
+	file_alignment.ipynb
+Done by Krishanu, manually!
+--------------------------------------------------
+## B4 running this cell first convert all doc to docx using:
+#####     Run in system's python and not in conda python
+#####    unoconv -d document --format=docx *.doc
+Delete .doc file after executing this command && rm *.doc
+
+There should not be . in file name
+
+## Conterting all docx to txt and adding underscore in filename and adding file id in filenames
+	
+	doc2text_with_dirStructure
+
+--------------------------------------------------
+
+cp AlignedTXT/E* parallel/org/English
+cp AlignedTXT/H* parallel/org/Hindi
+--------------------------------------------------
+## Required file structure: 
+
+parallel/org/English
+parallel/org/English
+parallel/SentPerLine/English
+parallel/SentPerLine/Hindi
+parallel/SentPerLine/champollion_out
+
+
+#sending files from parallel/org to parallel/SentPerLine
+#Sentence Tokenization for hindi
+	ILP_isha/code/create_corpora.ipynb
+
+--------------------------------------------------
+
+sh run_champ_all.sh
+
+This will create E*align_id.txt,  E*align_sent.txt, E*.xlsx for every pair of file
+inside parallel/SentPerLine/champollion_out
+
+cp parallel/SentPerLine/champollion_out/E*.xlsx parallel/xlsx
+--------------------------------------------------
+
+#Creating English sentence and hindi sentence python dictionary with ids
+#creating champollion output file in sentence format
+
+	champollion_output.ipynb
+	convert_champ_out.py
+--------------------------------------------------
+Created input and output files for sentence alignment experiment
+	manual work involved
+	/output/files_to_anand.ipynb
+
+--------------------------------------------------
+Code Execution Pipeline:
+
+1. Download a main folder which has eng-hindi parallel doc in the following format:
+   The Data should be maintained in the following format.
+	all_docx_data/
+		file1name.docx
+		Hindi/
+			filename1_Hindi.docx
+			
+		filename1.docx
+		Hindi/
+			filename2_Hindi.docx
+		..
+		..
+   Note: All Word doc should be in .docx and not .doc extension
+   
+2. Run ILP_isha/code/create_corpora.ipynb on all_docx_data
+   Now we will to convert all these files in txt format and in the following directory structure using above code
+AlignedTXT/
+	E1_..
+	H1_..
+	..
+	..
+
+
+  Note: All Word doc should be in .docx and not .doc extension
+
+
+3. Copy these files manually to
+   	parallel/
+   		org/
+   			English/
+   				E1_filename1.txt
+   				E2_filename1.txt
+   				..
+   				..
+   			Hindi/
+   			   	H1_filename1.txt
+   				H2_filename1.txt
+   				..
+   				..
+ 
+----------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+ILP_isha/code/BSA_output_formatting.ipynb
+--------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
