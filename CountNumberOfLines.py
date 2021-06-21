@@ -1,8 +1,4 @@
-#1. Given input file for which duplicate has to be found
-#2. Loop theough all the files and folders in the root folder
-#3. If it is a file. Read the first non-empty text of the file column
-#4. Write this text to a text file along with file name tab separated
-#5. If it is a folder loop through all the files and folder a d repeat step 3,4,5 until all the folders/files have been traversed
+#Get count og total number of non-empty lines in text file under a given folder
 
 import os
 import pandas as pd
