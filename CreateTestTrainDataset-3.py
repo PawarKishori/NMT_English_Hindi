@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split
 #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
 
-ROOT_FOLDER = "G:\Isha\PythonProject\ManuallyValidatedFiles\ManuallyValidatedFiles"
+root_folder = "G:\Isha\PythonProject\ManuallyValidatedFiles\ManuallyValidatedFiles-V2-16Jun"
 OUTPUT_ENG_TEXT_FILENAME = "./eng_consolidated_file.txt"
 OUTPUT_HINDI_TEXT_FILENAME = "./hindi_consolidated_file.txt"
 data_eng = []
@@ -21,22 +21,34 @@ data_hindi = []
 def write_consolidated_file(folder):
     eng_lines = 0
     hindi_lines=0
+    firsttime_hindi = 1
+    firsttime_eng = 1
+
     for dirpath,subdirectories,files in os.walk(folder):
         for file in files:
-            print(dirpath + '//' + file)
+            #print(dirpath + '//' + file)
             openfile = open(dirpath + '//' + file, mode='r',encoding='utf-8',errors='replace')
             all_text = openfile.read()
             openfile.close()
-            print(all_text.count('\n'))
+            #print(all_text.count('\n'))
             #with open(file, "r", encoding="utf-8") as myfile:
-            #    data_eng.append(myfile.readlines())
             if ('eng' in file):
-                f_eng = open(OUTPUT_ENG_TEXT_FILENAME, "a", encoding='utf-8')
+                if (firsttime_eng == 1):
+                    f_eng = open(OUTPUT_ENG_TEXT_FILENAME, "w", encoding='utf-8')
+                    firsttime_eng = 0
+                else:
+                    f_eng = open(OUTPUT_ENG_TEXT_FILENAME, "a", encoding='utf-8')
+                    firsttime_eng = 0
                 f_eng.write(all_text)
                 f_eng.close()
                 eng_lines = eng_lines + all_text.count('\n')
             else:
-                f_hindi = open(OUTPUT_HINDI_TEXT_FILENAME, "a", encoding='utf-8')
+                if (firsttime_hindi == 1):
+                    f_hindi = open(OUTPUT_HINDI_TEXT_FILENAME, "w", encoding='utf-8')
+                    firsttime_hindi = 0
+                else:
+                    f_hindi = open(OUTPUT_HINDI_TEXT_FILENAME, "a", encoding='utf-8')
+                    firsttime_hindi = 0
                 f_hindi.write(all_text)
                 f_hindi.close()
                 hindi_lines = hindi_lines + all_text.count('\n')
@@ -56,12 +68,15 @@ def read_file_to_dataframe():
         data_hindi.append(myfile_hindi.readlines())
     hindi_dataframe = pd.DataFrame(data_hindi).T
 
+    print('eng_dataframe', eng_dataframe.shape)
+    print('hindi_dataframe', hindi_dataframe.shape)
     #print(eng_dataframe.head,hindi_dataframe.head)
     return eng_dataframe,hindi_dataframe
 
-write_consolidated_file(ROOT_FOLDER)
+
+root_folder = input("Enter the root folder where english, hindi files are kept: ")
+write_consolidated_file(root_folder)
 eng_dataframe,hindi_dataframe = read_file_to_dataframe()
-print('eng_dataframe',eng_dataframe.shape)
-print('hindi_dataframe',hindi_dataframe.shape)
+
 X_train, X_test, y_train, y_test = train_test_split(eng_dataframe, hindi_dataframe, test_size=0.33)
 print(X_train.shape,X_test.shape,y_train.shape, y_test.shape)
