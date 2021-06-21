@@ -1,5 +1,5 @@
 #Go through all files..if english, write in a consolidate english file..same for hindi
-#Read the english and hindi consolidated text files in a dataset.
+#Read the english and hindi consolidated text files to dataframe.
 #Use train_test_split function to get the test and train dataset
 
 import os
